@@ -1,0 +1,23 @@
+# Development Dockerfile for Vue.js 3 with Bun
+FROM oven/bun:1-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install git (sometimes needed for dependencies)
+RUN apk add --no-cache git
+
+# Copy package files first for better caching
+COPY package.json bun.lockb* ./
+
+# Install dependencies (including Tailwind CSS and dev dependencies)
+RUN bun install --frozen-lockfile
+
+# Copy source code
+COPY . .
+
+# Expose Vite development port
+EXPOSE 7000
+
+# Start development server with host binding for Docker
+CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "7000"]

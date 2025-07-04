@@ -76,27 +76,27 @@ const getStatusIcon = (status?: string) => {
         class="px-4 py-3 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md"
         :class="[
           isUserMessage
-            ? 'bg-primary-500 text-white rounded-br-md'
+            ? 'text-white bg-amber-50 text-gray-800 rounded-br-md border border-gray-200'
             : isAIMessage
-              ? 'bg-gradient-to-r from-purple-50 to-pink-50 text-gray-800 rounded-bl-md border border-purple-100'
+              ? 'bg-pink-50 text-gray-800 rounded-bl-md border border-purple-100'
               : 'bg-white text-gray-800 rounded-bl-md border border-gray-100'
         ]"
       >
-        <p class="text-sm leading-relaxed break-words whitespace-pre-wrap">
+        <p class="text-sm text-gray-800 leading-relaxed break-words whitespace-pre-wrap">
           {{ message.text }}
         </p>
 
         <!-- Timestamp and status -->
         <div
           class="flex items-center justify-end mt-2 space-x-1"
-          :class="isUserMessage ? 'text-blue-100' : 'text-gray-400'"
+          :class="isUserMessage ? 'text-gray-400' : 'text-gray-400'"
         >
           <span class="text-xs">
             {{ formatTime(message.timestamp) }}
           </span>
-          <span v-if="isUserMessage && message.status" class="text-xs">
-            {{ getStatusIcon(message.status) }}
-          </span>
+<!--          <span v-if="isUserMessage && message.status" class="text-xs">-->
+<!--            {{ getStatusIcon(message.status) }}-->
+<!--          </span>-->
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@ const getStatusIcon = (status?: string) => {
       class="flex-shrink-0 ml-3 mt-1 order-2"
     >
       <div
-        class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white text-sm font-medium"
+        class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-white text-sm font-medium"
       >
         U
       </div>

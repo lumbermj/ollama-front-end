@@ -1,15 +1,219 @@
-/*@tailwind base;*/
-/*@tailwind components;*/
-/*@tailwind utilities;*/
-
-/*!*@layer base {*!*/
-/*!*    * {*!*/
-/*!*        @apply border-border;*!*/
-/*!*    }*!*/
-/*!*    body {*!*/
-/*!*        @apply bg-background text-foreground;*!*/
-/*!*    }*!*/
-/*!*}*!*/
-
-
 @import "tailwindcss";
+
+@theme {
+    --color-university-primary: #1e40af;
+    --color-university-secondary: #3b82f6;
+    --color-university-accent: #059669;
+    --color-university-gold: #f59e0b;
+    --color-academic-gray: #6b7280;
+    --color-academic-light-gray: #f9fafb;
+    --color-academic-dark-gray: #374151;
+    --color-darkness: oklch(60.6% 0.25 292.717);
+    --color-lightness: oklch(71.8% 0.202 349.761);
+
+    --font-family-academic: Georgia, "Times New Roman", serif;
+    --font-family-sans-academic: Inter, system-ui, sans-serif;
+
+    --shadow-academic: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+}
+
+@layer base {
+    body {
+        font-family: var(--font-family-sans-academic);
+        color: var(--color-academic-dark-gray);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-family-academic);
+    }
+}
+
+@layer components {
+    .btn-primary {
+        background-color: var(--color-university-primary);
+        color: white;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-university-secondary);
+    }
+
+    .card-academic {
+        background-color: white;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow-academic);
+        border: 1px solid #f3f4f6;
+        transition: box-shadow 0.3s;
+    }
+
+    .card-academic:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+    }
+
+    .badge-maintainer {
+        background-color: var(--color-university-gold);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        width: fit-content;
+    }
+    .badge-machine-learning {
+        background-color: var(--color-darkness);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        display: flex;
+        width: fit-content;
+    }
+    .badge-software-engineering {
+        background-color: var(--color-lightness);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        display: flex;
+        width: fit-content;
+    }
+
+    .badge-developer {
+        background-color: var(--color-academic-gray);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .tag-backend {
+        background-color: var(--color-darkness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .tag-database {
+        background-color: var(--color-darkness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .tag-datasets {
+        background-color: var(--color-darkness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .tag-frontend {
+        background-color: var(--color-lightness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .tag-ui-ux {
+        background-color: var(--color-lightness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .tag-deployment {
+        background-color: var(--color-lightness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .tag-research {
+        background-color: var(--color-darkness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .tag-ai {
+        background-color: var(--color-lightness);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    /* Logo container styles */
+    .logo-container {
+        position: relative;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+    }
+
+    .logo-container:hover {
+        transform: scale(1.05);
+        backdrop-filter: blur(12px);
+    }
+
+    /* Background logo effects */
+    .bg-logo-overlay {
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+    }
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .card-academic {
+        break-inside: avoid;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Hide background logos in print */
+    .absolute.opacity-5,
+    .absolute.opacity-3 {
+        display: none !important;
+    }
+}
+
+/* Responsive logo sizing */
+@media (max-width: 640px) {
+    .absolute.opacity-5 .w-96,
+    .absolute.opacity-3 .w-80 {
+        width: 16rem;
+        height: 16rem;
+    }
+
+    .absolute.opacity-5 .w-64,
+    .absolute.opacity-3 .w-56 {
+        width: 12rem;
+        height: 12rem;
+    }
+}

@@ -67,7 +67,7 @@ const handleCompositionEnd = () => {
           @compositionend="handleCompositionEnd"
           :placeholder="isLoading ? 'AI is thinking...' : 'Ask me anything...'"
           :disabled="isLoading"
-          class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-gray-700 disabled:bg-gray-50 disabled:cursor-not-allowed"
+          class="w-full px-4 py-3 pr-12 border border-gray-300  rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-gray-700 disabled:bg-gray-50 disabled:cursor-not-allowed"
           style="min-height: 50px; max-height: 120px;"
           rows="1"
         />
@@ -77,7 +77,7 @@ const handleCompositionEnd = () => {
       <button
         @click="sendMessage"
         :disabled="!messageText.trim() || isLoading"
-        class="flex-shrink-0 w-12 h-12 bg-primary-500 hover:bg-primary-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full flex items-center justify-center transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+        class="flex-shrink-0 w-12 h-12 bg-pink-300 cursor-pointer hover:bg-pink-400 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full flex items-center justify-center transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
         :class="messageText.trim() && !isLoading ? 'animate-bounce-gentle' : ''"
       >
         <svg

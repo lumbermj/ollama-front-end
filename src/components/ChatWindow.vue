@@ -1,9 +1,22 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, type Ref, ref, watch } from 'vue'
 import ChatHeader from '@/components/ChatHeader.vue'
 import ChatMessage from '@/components/ChatMessage.vue'
 import ChatInput from '@/components/ChatInput.vue'
 import type { ChatUser, Message } from '@/types/chat'
+import axios from 'axios'
+import { useStreaming } from '@/composables/useStreaming'
+import { uuid } from 'vue3-uuid'
+const currentMessageId: Ref<string | null> = ref(null)
+
+const { isStreaming, error, streamData, startStream, stopStream } = useStreaming()
+const apiUrl = ref('http://localhost:3000/chat/stream')
+
+const handleStartStream = async (text: string) => {
+  if (!apiUrl.value) return
+
+  await startStream(apiUrl.value, text)
+}
 
 const messages = ref<Message[]>([
   {
@@ -36,61 +49,11 @@ const scrollToBottom = async () => {
   }
 }
 
-const generateAIResponse = (userMessage: string): string => {
-  const responses = [
-    "That's a great question! Let me think about that for a moment...",
-    "I understand what you're asking. Here's what I think:",
-    "Interesting point! Based on my knowledge, I'd say:",
-    "Thanks for asking! Here's my perspective on that:",
-    "That's something I can definitely help with. Let me explain:",
-    "Great question! I'd be happy to help you with that.",
-    "I see what you're getting at. Here's my take:",
-    "That's a thoughtful question. From what I understand:",
-    "I'm glad you asked! This is actually quite interesting:",
-    'Let me break that down for you:',
-  ]
-
-  const followUps = [
-    "Is there anything specific about this topic you'd like me to elaborate on?",
-    'Would you like me to explain any part of this in more detail?',
-    'Do you have any follow-up questions about this?',
-    'Is this helpful, or would you like me to approach it differently?',
-    'Let me know if you need clarification on any part of this!',
-    'Feel free to ask if you want to explore this topic further.',
-    "Is there another aspect of this you'd like to discuss?",
-    'Would you like some examples to illustrate this better?',
-    'Does this answer your question, or should I provide more details?',
-    'What other questions do you have about this topic?',
-  ]
-
-  const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-  const randomFollowUp = followUps[Math.floor(Math.random() * followUps.length)]
-
-  // Generate a contextual response based on user input
-  let contextualResponse: string
-  const lowerMessage = userMessage.toLowerCase()
-
-  if (
-    lowerMessage.includes('hello') ||
-    lowerMessage.includes('hi') ||
-    lowerMessage.includes('hey')
-  ) {
-    contextualResponse =
-      "Hello there! It's great to meet you. I'm here and ready to help with whatever you need."
-  } else if (lowerMessage.includes('help')) {
-    contextualResponse =
-      "I'd be happy to help! I can assist with a wide variety of topics including answering questions, providing explanations, helping with problem-solving, creative tasks, and much more."
-  } else if (lowerMessage.includes('what') && lowerMessage.includes('you')) {
-    contextualResponse =
-      "I'm an AI assistant designed to be helpful, harmless, and honest. I can help with information, analysis, creative tasks, problem-solving, and engaging conversation on a wide range of topics."
-  } else if (lowerMessage.includes('how') && lowerMessage.includes('you')) {
-    contextualResponse =
-      "I'm doing well, thank you for asking! I'm here and ready to assist you with whatever you need help with today."
-  } else {
-    contextualResponse = `${randomResponse}\n\nRegarding "${userMessage}" - this is an interesting topic that I'd be happy to explore with you. While I don't have real-time information, I can share insights based on my training data.\n\n${randomFollowUp}`
+const streamInMessage = async () => {
+  const currentMessage = messages.value.find((msg) => msg.id == currentMessageId.value)
+  if (currentMessage) {
+    currentMessage.text = streamData.content
   }
-
-  return contextualResponse
 }
 
 const showTypingIndicator = async () => {
@@ -123,8 +86,9 @@ const handleSendMessage = async (text: string) => {
   // Set loading state
   chatInputRef.value?.setLoading(true)
 
+  // Create user message
   const newMessage: Message = {
-    id: Date.now().toString(),
+    id: uuid.v4(),
     text,
     sender: 'user',
     timestamp: new Date(),
@@ -132,10 +96,11 @@ const handleSendMessage = async (text: string) => {
     status: 'sending',
   }
 
+  // Add user message immediately (no setTimeout)
   messages.value.push(newMessage)
   await scrollToBottom()
 
-  // Simulate message status updates
+  // Update user message status
   setTimeout(() => {
     newMessage.status = 'sent'
   }, 300)
@@ -144,36 +109,31 @@ const handleSendMessage = async (text: string) => {
     newMessage.status = 'delivered'
   }, 600)
 
-  // Show typing indicator
-  const typingMessage = await showTypingIndicator()
-
-  // Simulate AI thinking time
-  const thinkingTime = 1500 + Math.random() * 2000
-
-  setTimeout(async () => {
-    // Remove typing indicator
-    removeTypingIndicator(typingMessage)
-
-    // Generate AI response
-    const aiResponseText = generateAIResponse(text)
-
-    const aiResponse: Message = {
-      id: (Date.now() + 1).toString(),
-      text: aiResponseText,
-      sender: 'ai',
-      timestamp: new Date(),
-      senderName: 'AI Assistant',
-      status: 'read',
-    }
-
-    messages.value.push(aiResponse)
+  setTimeout(() => {
     newMessage.status = 'read'
+  }, 900)
 
-    // Remove loading state
-    chatInputRef.value?.setLoading(false)
+  // Create AI response message with empty text for streaming
+  currentMessageId.value = uuid.v4()
 
-    await scrollToBottom()
-  }, thinkingTime)
+  const aiResponse: Message = {
+    id: currentMessageId.value,
+    text: '', // Start with empty text for streaming
+    sender: 'ai',
+    timestamp: new Date(),
+    senderName: 'AI Assistant',
+    status: 'read',
+  }
+
+  // Add AI message to array before starting stream
+  messages.value.push(aiResponse)
+  await scrollToBottom()
+
+  // Start streaming
+  await handleStartStream(text)
+
+  // Remove loading state
+  chatInputRef.value?.setLoading(false)
 }
 
 const handleScroll = () => {
@@ -184,6 +144,7 @@ const handleScroll = () => {
 }
 
 watch(messages, scrollToBottom, { deep: true })
+watch(streamData, streamInMessage, { deep: true })
 
 onMounted(() => {
   scrollToBottom()

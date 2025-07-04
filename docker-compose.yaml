@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Vue.js frontend service only
+  ollama-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ollama-frontend
+    ports:
+      - "7000:7000"
+#    environment:
+#       Configure your backend API URL here
+#      - VITE_OLLAMA_API_URL=http://your-backend-host:11434
+#      - VITE_API_BASE_URL=http://your-backend-host:11434
+    restart: unless-stopped
+    networks:
+      - frontend
+
+  # Development service (uncomment if you want to run in dev mode)
+  ollama-frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ollama-frontend-dev
+    ports:
+      - "7000:7000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+#    environment:
+#       Configure your backend API URL here
+#      - VITE_OLLAMA_API_URL=http://your-backend-host:11434
+#      - VITE_API_BASE_URL=http://your-backend-host:11434
+    restart: unless-stopped
+    networks:
+      - frontend
+    profiles:
+      - dev
+
+networks:
+  frontend:
+    driver: bridge
