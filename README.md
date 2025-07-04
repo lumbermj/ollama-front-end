@@ -36,21 +36,12 @@ Before you begin, ensure you have the following installed on your system:
    bun install
    ```
 
-3. **Configure environment variables**
-    - Copy the example environment file (if available) or create your own
-    - Set up your Ollama API URL and other configuration options
-   ```bash
-   # Example environment variables
-   VITE_OLLAMA_API_URL=http://localhost:11434
-   VITE_API_BASE_URL=http://localhost:11434
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    bun run dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
     - Navigate to `http://localhost:7000`
     - The development server will automatically reload when you make changes
 
@@ -64,21 +55,12 @@ Before you begin, ensure you have the following installed on your system:
    cd ollama-frontend
    ```
 
-2. **Configure environment variables**
-    - Edit the `docker-compose.yaml` file
-    - Uncomment and modify the environment variables under `ollama-frontend-dev` service:
-   ```yaml
-   environment:
-     - VITE_OLLAMA_API_URL=http://your-backend-host:11434
-     - VITE_API_BASE_URL=http://your-backend-host:11434
-   ```
-
-3. **Start the development container**
+2. **Start the development container**
    ```bash
    docker-compose --profile dev up --build
    ```
 
-4. **Access the application**
+3. **Access the application**
     - Open `http://localhost:7000` in your browser
     - Changes to your code will be automatically reflected (hot reload)
 
@@ -91,40 +73,6 @@ Before you begin, ensure you have the following installed on your system:
 
 2. **Access the application**
     - Open `http://localhost:7000` in your browser
-
-## 🔧 Configuration
-
-### Environment Variables
-
-The application uses the following environment variables:
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_OLLAMA_API_URL` | Ollama API endpoint URL | `http://localhost:11434` |
-| `VITE_API_BASE_URL` | Base API URL for backend communication | `http://localhost:11434` |
-
-### Backend Configuration
-
-Make sure your Ollama backend is running and accessible:
-
-1. **Install Ollama** (if not already installed)
-   ```bash
-   # On macOS
-   brew install ollama
-   
-   # On Linux
-   curl -fsSL https://ollama.ai/install.sh | sh
-   ```
-
-2. **Start Ollama service**
-   ```bash
-   ollama serve
-   ```
-
-3. **Pull a model** (optional, for testing)
-   ```bash
-   ollama pull llama2
-   ```
 
 ## 🏗️ Build Commands
 
@@ -250,17 +198,6 @@ If you encounter issues:
 3. Verify your backend is running and accessible
 4. Ensure all prerequisites are properly installed
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the [LICENSE](LICENSE) file in the root directory.
 
 ## 🙏 Acknowledgments
 
