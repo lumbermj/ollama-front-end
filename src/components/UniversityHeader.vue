@@ -44,13 +44,13 @@
             Project Contributors
           </h1>
           <p class="text-lg lg:text-xl text-blue-100 mb-2">
-            Project I
+            BPR601
           </p>
           <p class="text-base lg:text-lg text-blue-200">
             S24
           </p>
           <p class="text-base lg:text-lg text-blue-200">
-            Prof. Fullan
+            Prof. Ali Nidal Muhammed
           </p>
         </div>
       </div>

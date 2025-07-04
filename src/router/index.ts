@@ -9,11 +9,13 @@ const router = createRouter({
       path: '/chat',
       name: 'chat',
       component: ChatView,
+      meta: {title: 'Ollama Chatbot | Chat'}
     },
     {
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {title: 'Ollama Chatbot | Contributors'}
     }
   ],
 })

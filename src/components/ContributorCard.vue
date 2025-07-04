@@ -23,7 +23,7 @@ const getContributionClass = (contribution: string) => {
   if (lowerContribution.includes('database')) return 'tag-database';
   if (lowerContribution.includes('frontend')) return 'tag-frontend';
   if (lowerContribution.includes('datasets')) return 'tag-datasets';
-  if (lowerContribution.includes('deployment')) return 'tag-deployment';
+  if (lowerContribution.includes('devops')) return 'tag-deployment';
   if (lowerContribution.includes('research')) return 'tag-research';
   if (lowerContribution.includes('ui/ux')) return 'tag-ui-ux';
   if (lowerContribution.includes('ai')) return 'tag-ai';
@@ -49,7 +49,7 @@ const getContributionClass = (contribution: string) => {
 <!--          <h4 class="text-xs opacity-60 font-bold text-sky-600 bg-sky-300 rounded-lg px-2">-->
 <!--              {{ contributor.speciality }}-->
 <!--            </h4>-->
-          <h4 class="text-sm text-academic-dark-gray">{{ contributor.uid }}</h4>
+          <h4 class="text-sm font-mono text-academic-dark-gray">{{ contributor.uid }}</h4>
         </div>
       </div>
 

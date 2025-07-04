@@ -30,8 +30,8 @@ import logo from "@/assets/logo-white-1.png";
         <!-- Right side: Project Details -->
         <div class="text-center lg:text-right">
           <div class="mb-4">
-            <h4 class="text-lg lg:text-xl font-academic font-semibold mb-2">
-              Project I
+            <h4 class="text-lg lg:text-xl font-sans font-semibold mb-2">
+              BPR601 - Project I
             </h4>
             <p class="text-gray-300 text-sm lg:text-base">
               Machine Learning & Software Engineering Departments
